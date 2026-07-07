@@ -1,0 +1,25 @@
+# Data and large files never belong in this repo — they live in ~/Documents/HPC_data/
+data/
+raw/
+processed/
+results/
+*.h5ad
+*.h5
+*.rds
+*.fastq*
+*.bam
+*.pdb
+*.cif
+
+# SLURM logs
+logs/
+slurm-*.out
+
+# Python / notebooks
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.env
+
+# OS
+.DS_Store
