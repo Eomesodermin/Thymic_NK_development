@@ -1,0 +1,28 @@
+# mtclone analysis environment.
+# Create with:  conda env create -f environment.yml
+# (channels order matters: conda-forge before bioconda before defaults)
+#
+# Versions below are the ones the pipeline was developed + tested against
+# (pinned to minor for reproducibility; loosen if solving is slow on another platform).
+name: mtclone
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.11
+  - scanpy=1.11
+  - anndata=0.12
+  - numpy=2.4
+  - scipy=1.17
+  - pandas=2.3
+  - python-igraph=1.0
+  - leidenalg=0.12
+  - scikit-learn=1.9
+  - statsmodels=0.14
+  - pysam=0.24
+  - matplotlib-base=3.11
+  - h5py=3.16
+  - pytest=9.1
+# NOTE: mgatk / redeemR re-calling (the optional recall/ module) is intentionally NOT here.
+#   - mgatk needs bwa + samtools + its own python env; install separately on the HPC side.
+#   - redeemR is R/Bioconductor; build a separate r-env if/when raw ReDeeM tables are available.
