@@ -114,9 +114,18 @@ def run():
                             "dm": (a.obs.nk_subset.values == "dim"), "vpc": vpc})
         g = dfc.groupby("cid").agg(nb=("br", "sum"), nd=("dm", "sum"), mvpc=("vpc", "mean"), sz=("cid", "size"))
         g = g[g.sz >= 2]; mixed = (g.nb >= 1) & (g.nd >= 1)
+        # drop-top-5%-vpc reanalysis: if mixing were doublet-driven, removing the high-variant-load
+        # tail (doublet candidates) should collapse observed mixing toward the null. Recompute the
+        # per-object observed frac_mixed with all cells vs with the top-5%-vpc cells removed.
+        cid_all = a.obs.clone_id.values; ib_all = (a.obs.nk_subset.values == "bright")
+        code_all, uniq = pd.factorize(cid_all); Kall = len(uniq)
+        obs_all = frac_mixed_fast(code_all, ib_all, Kall)
+        thr = np.percentile(vpc, 95); keep = vpc <= thr
+        code_k, uk = pd.factorize(cid_all[keep]); obs_drop = frac_mixed_fast(code_k, ib_all[keep], len(uk))
         checks.append(dict(object=name, arm=arm,
                            vpc_mixed=float(g.mvpc[mixed].mean()) if mixed.any() else np.nan,
-                           vpc_pure=float(g.mvpc[~mixed].mean()) if (~mixed).any() else np.nan))
+                           vpc_pure=float(g.mvpc[~mixed].mean()) if (~mixed).any() else np.nan,
+                           obs_frac_mixed_all=obs_all, obs_frac_mixed_drop_top5pct_vpc=obs_drop))
     cc = pd.DataFrame(checks)
     cc["vpc_ratio_mixed_over_pure"] = cc.vpc_mixed / cc.vpc_pure
     cc.to_csv(f"{OUT}/plan2_step7_doublet_check.csv", index=False)

@@ -17,8 +17,10 @@ Statistic: eta^2 = fraction of the axis-score variance explained by the clonal p
 lineages track bright/dim (two-lineage-like); eta^2 ~ null and small => lineages are
 transcriptionally mixed (continuum).
 
-NOTE: Rückert variant_group clones are mostly size 2-4, so <2 clones reach >=10 cells per donor
--> the large-lineage eta^2 test is only powered on ReDeeM. Rückert's arm is covered by Step 5.
+NOTE: Rückert variant_group clones are mostly size 2-4, so 6 of 8 donor-units have <2 clones
+reaching >=10 cells and cannot support the large-lineage eta^2 test (NaN). The 2 exceptions
+(mtASAP2 CMVpos3 n=14, CMVpos4 n=18) ARE tested and give eta^2 indistinguishable from null
+(p=0.29, 0.42) — corroborating the ReDeeM result. Rückert's arm otherwise rests on Step 5.
 NOTE: ENKP/ILCP (2024 Nat Immunol) signatures are NOT computed — the exported 20-gene panel shares
 only IL7R with those progenitor sets; recovering them needs a full-transcriptome re-export from the
 Seurat objects (flagged as a limitation, not run).
