@@ -1,8 +1,8 @@
-# Data and large files never belong in this repo — they live in ~/Documents/HPC_data/
+# Heavy/raw/processed data never belong in this repo — they live in ~/Documents/HPC_data/
+# (Light analysis outputs — figures, CSVs, memos, HTML reports — under results/ ARE tracked.)
 data/
 raw/
 processed/
-results/
 *.h5ad
 *.h5
 *.rds

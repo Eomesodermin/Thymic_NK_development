@@ -1,0 +1,254 @@
+{
+ "panel": {
+  "NCR1": "NK",
+  "GNLY": "NK",
+  "KLRD1": "NK",
+  "NKG7": "NK",
+  "KLRF1": "NK",
+  "NCAM1": "NK",
+  "PRF1": "NK_cyto",
+  "GZMB": "NK_cyto",
+  "EOMES": "NK_TF",
+  "TBX21": "NK_TF",
+  "KLRB1": "NK",
+  "CD3D": "T",
+  "CD3E": "T",
+  "CD3G": "T",
+  "CD8A": "T",
+  "CD4": "Tmyel",
+  "FOXP3": "Treg",
+  "CD14": "myeloid",
+  "LYZ": "myeloid",
+  "MS4A1": "B",
+  "CD19": "B",
+  "IL7R": "ILC_T",
+  "KIT": "ILC",
+  "RORC": "ILC",
+  "IL1R1": "ILC",
+  "GZMK": "bright",
+  "SELL": "bright",
+  "XCL1": "bright",
+  "FCGR3A": "dim",
+  "FGFBP2": "dim",
+  "CX3CR1": "dim"
+ },
+ "coords": {
+  "CD14": {
+   "chrom": "chr5",
+   "start": 140630402,
+   "end": 140633711,
+   "strand": -1,
+   "ensembl": "ENSG00000170458"
+  },
+  "CD19": {
+   "chrom": "chr16",
+   "start": 28931965,
+   "end": 28939342,
+   "strand": 1,
+   "ensembl": "ENSG00000177455"
+  },
+  "CD3D": {
+   "chrom": "chr11",
+   "start": 118334537,
+   "end": 118342713,
+   "strand": -1,
+   "ensembl": "ENSG00000167286"
+  },
+  "CD3E": {
+   "chrom": "chr11",
+   "start": 118304701,
+   "end": 118316175,
+   "strand": 1,
+   "ensembl": "ENSG00000198851"
+  },
+  "CD3G": {
+   "chrom": "chr11",
+   "start": 118344338,
+   "end": 118355161,
+   "strand": 1,
+   "ensembl": "ENSG00000160654"
+  },
+  "CD4": {
+   "chrom": "chr12",
+   "start": 6786858,
+   "end": 6820807,
+   "strand": 1,
+   "ensembl": "ENSG00000010610"
+  },
+  "CD8A": {
+   "chrom": "chr2",
+   "start": 86784455,
+   "end": 86808396,
+   "strand": -1,
+   "ensembl": "ENSG00000153563"
+  },
+  "CX3CR1": {
+   "chrom": "chr3",
+   "start": 39263495,
+   "end": 39281735,
+   "strand": -1,
+   "ensembl": "ENSG00000168329"
+  },
+  "EOMES": {
+   "chrom": "chr3",
+   "start": 27715949,
+   "end": 27722711,
+   "strand": -1,
+   "ensembl": "ENSG00000163508"
+  },
+  "FCGR3A": {
+   "chrom": "chr1",
+   "start": 161541738,
+   "end": 161550968,
+   "strand": -1,
+   "ensembl": "ENSG00000203747"
+  },
+  "FGFBP2": {
+   "chrom": "chr4",
+   "start": 15960245,
+   "end": 15969309,
+   "strand": -1,
+   "ensembl": "ENSG00000137441"
+  },
+  "FOXP3": {
+   "chrom": "chrX",
+   "start": 49250436,
+   "end": 49264800,
+   "strand": -1,
+   "ensembl": "ENSG00000049768"
+  },
+  "GNLY": {
+   "chrom": "chr2",
+   "start": 85685175,
+   "end": 85698854,
+   "strand": 1,
+   "ensembl": "ENSG00000115523"
+  },
+  "GZMB": {
+   "chrom": "chr14",
+   "start": 24630954,
+   "end": 24634277,
+   "strand": -1,
+   "ensembl": "ENSG00000100453"
+  },
+  "GZMK": {
+   "chrom": "chr5",
+   "start": 55024249,
+   "end": 55034570,
+   "strand": 1,
+   "ensembl": "ENSG00000113088"
+  },
+  "IL1R1": {
+   "chrom": "chr2",
+   "start": 102063933,
+   "end": 102179874,
+   "strand": 1,
+   "ensembl": "ENSG00000115594"
+  },
+  "IL7R": {
+   "chrom": "chr5",
+   "start": 35852695,
+   "end": 35879603,
+   "strand": 1,
+   "ensembl": "ENSG00000168685"
+  },
+  "KIT": {
+   "chrom": "chr4",
+   "start": 54657267,
+   "end": 54740783,
+   "strand": 1,
+   "ensembl": "ENSG00000157404"
+  },
+  "KLRB1": {
+   "chrom": "chr12",
+   "start": 9593888,
+   "end": 9607949,
+   "strand": -1,
+   "ensembl": "ENSG00000111796"
+  },
+  "KLRD1": {
+   "chrom": "chr12",
+   "start": 10226058,
+   "end": 10329608,
+   "strand": 1,
+   "ensembl": "ENSG00000134539"
+  },
+  "KLRF1": {
+   "chrom": "chr12",
+   "start": 9827420,
+   "end": 9845007,
+   "strand": 1,
+   "ensembl": "ENSG00000150045"
+  },
+  "LYZ": {
+   "chrom": "chr12",
+   "start": 69348381,
+   "end": 69354237,
+   "strand": 1,
+   "ensembl": "ENSG00000090382"
+  },
+  "MS4A1": {
+   "chrom": "chr11",
+   "start": 60455752,
+   "end": 60470752,
+   "strand": 1,
+   "ensembl": "ENSG00000156738"
+  },
+  "NCAM1": {
+   "chrom": "chr11",
+   "start": 112961275,
+   "end": 113278436,
+   "strand": 1,
+   "ensembl": "ENSG00000149294"
+  },
+  "NCR1": {
+   "chrom": "chr19",
+   "start": 54906112,
+   "end": 54941199,
+   "strand": 1,
+   "ensembl": "ENSG00000189430"
+  },
+  "NKG7": {
+   "chrom": "chr19",
+   "start": 51371606,
+   "end": 51375628,
+   "strand": -1,
+   "ensembl": "ENSG00000105374"
+  },
+  "PRF1": {
+   "chrom": "chr10",
+   "start": 70596401,
+   "end": 70602788,
+   "strand": -1,
+   "ensembl": "ENSG00000180644"
+  },
+  "RORC": {
+   "chrom": "chr1",
+   "start": 151806021,
+   "end": 151831845,
+   "strand": -1,
+   "ensembl": "ENSG00000143365"
+  },
+  "SELL": {
+   "chrom": "chr1",
+   "start": 169690665,
+   "end": 169712202,
+   "strand": -1,
+   "ensembl": "ENSG00000188404"
+  },
+  "TBX21": {
+   "chrom": "chr17",
+   "start": 47733236,
+   "end": 47746126,
+   "strand": 1,
+   "ensembl": "ENSG00000073861"
+  },
+  "XCL1": {
+   "chrom": "chr1",
+   "start": 168576596,
+   "end": 168582069,
+   "strand": 1,
+   "ensembl": "ENSG00000143184"
+  }
+ }
+}
