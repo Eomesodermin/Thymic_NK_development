@@ -1,5 +1,7 @@
 # Thymic NK development — developmental origins of NK cells
 
+[![CI](https://github.com/Eomesodermin/Thymic_NK_development/actions/workflows/ci.yml/badge.svg)](https://github.com/Eomesodermin/Thymic_NK_development/actions/workflows/ci.yml)
+
 **Do NK cells carry a TCR‑rearrangement footprint of a thymic / aborted‑T origin, and are CD56^bright and CD56^dim NK developmentally distinct?**
 
 ## 📄 Full project report
