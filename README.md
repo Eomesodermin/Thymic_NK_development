@@ -8,17 +8,22 @@
 
 A standalone rendered version with all figures embedded is at **[`report.html`](report.html)** (self‑contained — open directly in any browser).
 
+### The project in one paragraph
+
+The idea: a subset of NK cells (enriched in CD56^bright) might arise via a **thymic / aborted‑T pathway** and carry a relic of it as **non‑productive TCR rearrangements**. The first approach — reading that footprint from single‑cell TCR (mRNA/VDJ) data — turned out to be **structurally the wrong assay**: non‑productive rearrangements are NMD‑silenced/degraded, so mRNA‑based VDJ measures a deflated floor, not the true rate; the footprint lives in genomic DNA where this assay can't see it. So the effort **pivoted to somatic‑mtDNA lineage tracing (mtSNP)** — but those datasets are **sparse** (no thymic dataset exists at all), and from the one decent tumor dataset there *appears* to be a clonal‑restriction signal in **one tumor type only (high‑grade serous ovarian), in ~2 patients** — too few to be confident. The one place the data spoke with any strength: bright and dim NK are **not cleanly two lineages** — though even that rests on very few informative clones.
+
 ### Headline findings
 
 | Question | Verdict | Confidence |
 |----------|---------|:----------:|
-| Are CD56^bright and CD56^dim NK one lineage or two? | **One clonal lineage / continuum** (mtDNA sharing) | high |
-| Do NK carry a non‑productive TCR footprint? | Yes, but weak (~0.4–0.5%) and **not** CD56^bright‑enriched | moderate |
-| Do NK trace a thymic/DN‑branch trajectory? | Reproducible in direction but statistically fragile (perm p = 0.29) | low |
-| Are tumor‑infiltrating NK clonally restricted? | **Tumor‑type‑dependent** — restricted in HGSC ovarian, passive in NSCLC | moderate–high |
+| Can mRNA‑based VDJ measure the NK TCR footprint? | **No** — NMD silences the transcripts; assay sees a deflated floor | — |
+| Do NK carry a non‑productive TCR footprint (as far as we can see)? | Detectable but weak (~0.4–0.5%), **not** CD56^bright‑enriched, under‑measured | moderate |
+| Do NK trace a thymic/DN‑branch trajectory? | Reproducible in direction but not significant (perm p = 0.29) | low |
+| Are CD56^bright and CD56^dim NK two lineages? | **No clear evidence of two** — clean segregation excluded, but built on ~38 informative clones | moderate (strongest, power‑limited) |
+| Are tumor‑infiltrating NK clonally restricted? | Apparent in **HGSC ovarian only** (not lung), but ~2 patients | low–moderate |
 | Are NK clonally closer to T or myeloid? | Myeloid‑leaning (5/6 patients, p ≈ 0.06); human evidence mixed | low–moderate |
 
-The strongest result — that bright and dim NK are one clonal lineage — argues against the two‑origin premise as originally framed. See the report for the full picture across both the TCR‑footprint and mtDNA lineage‑tracing streams.
+An honest negative on the headline hypothesis: the direct assay is defeated by measurement biology and the alternative by data scarcity. See the report for the full arc across both the TCR‑footprint and mtSNP lineage‑tracing streams, and §10 for what would be needed to test it properly.
 
 ---
 
