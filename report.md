@@ -113,7 +113,7 @@ Every dataset below was obtained from a public repository. The **paper it came f
 |---------|-----------|-------|--------|------------------|:----------:|------|
 | **Rückert NK memory** | [GSE197008](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE197008) / [GSE197037](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE197037) | Rückert et al. (mtASAP/ASAP‑seq) | mtscATAC + ASAP‑seq (surface protein) | Sorted blood NK; CD56/CD16 protein gate for bright/dim | **29,536 NK**, 3 ASAP samples / 6 donors | **Plan 2** primary — bright‑vs‑dim, blood arm |
 | **Weng ReDeeM atlas** | [GSE219014](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE219014) family (+ Figshare [ReDeeM‑V](https://doi.org/10.6084/m9.figshare.24418966.v1), [Seurat RDS](https://doi.org/10.6084/m9.figshare.23290004.v1)) | [Weng et al. 2024, *Nature*](https://doi.org/10.1038/s41586-024-07066-z) | ReDeeM (deepest mtDNA) | Bone‑marrow BMMC + CD34; progenitor‑proximal; RNA labels | **4,189 NK**, 4 donors | **Plan 2** complement (marrow); NK↔T origin probe |
-| **Liu tumor mtscATAC** | [GSE302113](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE302113) | [Liu et al. 2026, *Cancer Cell*](https://doi.org/10.1016/j.ccell.2026.05.006) (bioRxiv [10.1101/2025.07.16.665245](https://doi.org/10.1101/2025.07.16.665245)) | mtscATAC‑seq | NSCLC + ovarian, matched tumor/normal/blood; 228,254 cells | 125–2,013 tumor NK w/variant per donor | **Plan 3** sole primary — tumor clonal restriction (Q4) |
+| **Liu tumor mtscATAC** | [GSE302113](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE302113) | [Liu et al. 2026, *Cancer Cell*](https://doi.org/10.1016/j.ccell.2026.05.006) (bioRxiv [10.1101/2025.07.16.665245](https://doi.org/10.1101/2025.07.16.665245)) | mtscATAC‑seq | NSCLC + ovarian, matched tumor/normal/blood; ~218,700 cells deposited (124,958 NSCLC + 93,757 ovarian) | 125–2,013 tumor NK w/variant per donor | **Plan 3** sole primary — tumor clonal restriction (Q4) |
 
 ### Complementary — clonal tracking
 
@@ -151,7 +151,7 @@ Quantifying non‑productive TCR contigs in confidently‑annotated NK cells fro
 | CD8_T | 26,416 | 98.07 | 2.873 | 34.010 |
 | CD4_T | 44,900 | 93.83 | 1.826 | 31.180 |
 
-NK cells do carry non‑productive‑only rearrangements — but at ~0.4–0.5%, roughly **15–18× below γδ T cells** and **5–7× below αβ T cells**. The signal sits just above what an ambient/dropout floor would produce; it is real but marginal.
+NK cells do carry non‑productive‑only rearrangements — but at ~0.4–0.5%, roughly **14–18× below γδ T cells** and **3–7× below αβ T cells**. The signal sits just above what an ambient/dropout floor would produce; it is real but marginal.
 
 **Bright vs dim footprint** (the direct Q2 test):
 
