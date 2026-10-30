@@ -3,6 +3,8 @@
 [![CI](https://github.com/Eomesodermin/Thymic_NK_development/actions/workflows/ci.yml/badge.svg)](https://github.com/Eomesodermin/Thymic_NK_development/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
+> **Context.** This project was done as part of the **[Built with Claude: Life Sciences](https://cerebralvalley.ai/e/built-with-claude-life-sciences)** hackathon, hosted by Anthropic and the Gladstone Institutes and organised by Cerebral Valley (fully virtual, 7–13 July 2026).
+
 **Do NK cells carry a TCR-rearrangement footprint of a thymic or aborted-T origin, and are
 CD56^bright and CD56^dim NK cells developmentally distinct?**
 

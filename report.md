@@ -2,7 +2,7 @@
 
 **A comprehensive project report**
 
-*Gladstone × Claude Life Sciences Hackathon project. This document is a standalone, self‑contained account of the research questions, the datasets obtained, every analysis stream attempted, the results, and their interpretation — including the honest limits of what the data can and cannot show.*
+*Project report from the [Built with Claude: Life Sciences](https://cerebralvalley.ai/e/built-with-claude-life-sciences) hackathon (Anthropic and the Gladstone Institutes, 7–13 July 2026). This document is a standalone, self‑contained account of the research questions, the datasets obtained, every analysis stream attempted, the results, and their interpretation — including the honest limits of what the data can and cannot show.*
 
 ---
 
