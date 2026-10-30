@@ -8,10 +8,9 @@ infiltrate?). Both reduce to the same operations on a cell × mtDNA-variant matr
 ## Install
 
 ```bash
-conda env create -f environment.yml
+conda env create -f ../../environment.yml     # from this directory; or: pip install -e ".[dev]" at the repo root
 conda activate mtclone
-# run from the scripts/ dir (parent of mtclone/) so `import mtclone` resolves,
-# or add scripts/ to PYTHONPATH.
+pip install -e .      # from the repo root, so `import mtclone` resolves anywhere
 ```
 
 ## Pipeline
@@ -96,14 +95,14 @@ PYTHONPATH=.. python -m pytest tests/ -q
 PYTHONPATH=.. python tests/run_end_to_end.py --testdata <dir> --out <dir>
 ```
 
-## Known data-availability note (feeds Plan 2)
+## Known data-availability note (feeds Analysis B1)
 
 GSE219014's ReDeeM `*_mtDNA_Variants_matrix.mtx.gz` ships on GEO **without** companion
 `barcodes`/`features` files, and its dimensions match neither axis of the paired RNA h5. Cell
 barcodes and variant identities are therefore **not recoverable from GEO alone** — real
 ReDeeM analysis must source them from the authors' redeemR repository / Zenodo deposit. The
 `read_redeem_mtx` adapter is correct; the inputs it needs (barcodes, features, ideally depth)
-must be obtained before Plan 2 can use this dataset for biology.
+must be obtained before Analysis B1 can use this dataset for biology.
 
 ## `recall/` (deferred)
 

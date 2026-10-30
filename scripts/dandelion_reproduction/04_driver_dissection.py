@@ -33,7 +33,7 @@ import warnings; warnings.filterwarnings("ignore")
 import os, numpy as np, pandas as pd, scanpy as sc
 import dandelion as ddl, palantir
 
-BASE = "/Users/dilloncorvino/Documents/HPC_data/Thymic_NK_development/processed/dandelion_reproduction"
+BASE = os.path.join(os.path.abspath(os.environ.get("NK_DATA_DIR", "data")), "processed", "dandelion_reproduction")
 CKPT = f"{BASE}/trajectory_adata_scvi_nhoods.h5ad"   # scVI + nhoods (from 03_build_trajectory)
 CT_COL = "celltype_annotation"
 CD34_ENS = "ENSG00000174059"

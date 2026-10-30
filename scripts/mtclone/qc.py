@@ -7,7 +7,6 @@ the thresholds appropriate to the assay.
 from __future__ import annotations
 
 import numpy as np
-import scipy.sparse as sp
 import anndata as ad
 
 # ---- documented defaults (see README / Liu et al. methods) -------------------------------

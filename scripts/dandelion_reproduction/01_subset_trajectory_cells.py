@@ -12,10 +12,12 @@ Input : raw/suo_fetal/lymphoid.h5ad      (CELLxGENE Suo collection b1a879f6..., 
 Output: processed/dandelion_reproduction/trajectory_gex_subset.h5ad
 """
 import warnings; warnings.filterwarnings("ignore")
-import scanpy as sc, numpy as np, anndata as ad, os
+import scanpy as sc, os
 
-RAW = "/Users/dilloncorvino/Documents/HPC_data/Thymic_NK_development/raw/suo_fetal/lymphoid.h5ad"
-OUT_DIR = "/Users/dilloncorvino/Documents/HPC_data/Thymic_NK_development/processed/dandelion_reproduction"
+DATA_DIR = os.path.abspath(os.environ.get("NK_DATA_DIR", "data"))  # raw/ and processed/ live here
+
+RAW = os.path.join(DATA_DIR, "raw", "suo_fetal", "lymphoid.h5ad")
+OUT_DIR = os.path.join(DATA_DIR, "processed", "dandelion_reproduction")
 os.makedirs(OUT_DIR, exist_ok=True)
 
 RECIPE = ["DN(early)_T","DN(P)_T","DN(Q)_T","DP(P)_T","DP(Q)_T",

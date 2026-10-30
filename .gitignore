@@ -1,4 +1,4 @@
-# Heavy/raw/processed data never belong in this repo — they live in ~/Documents/HPC_data/
+# Heavy raw and processed data never belong in this repo; point NK_DATA_DIR at a directory outside it.
 # (Light analysis outputs — figures, CSVs, memos, HTML reports — under results/ ARE tracked.)
 data/
 raw/

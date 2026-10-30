@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+title: "Developmental origins of NK cells: TCR footprints and mtDNA lineage tracing"
+message: "If you use this analysis or the mtclone package, please cite it as below."
+type: software
+authors:
+  - family-names: Corvino
+    given-names: Dillon
+    website: "https://dilloncorvino.com"
+abstract: >-
+  Tests whether NK cells carry a TCR-rearrangement footprint of a thymic or aborted-T origin and
+  whether CD56bright and CD56dim NK cells are distinct lineages, using single-cell VDJ data and
+  somatic mtDNA lineage tracing across public datasets. Includes mtclone, a tested package for
+  mtDNA clone calling and sharing statistics.
+repository-code: "https://github.com/Eomesodermin/Thymic_NK_development"
+license: MIT
+keywords:
+  - NK cells
+  - lineage tracing
+  - mtDNA
+  - single-cell
+  - TCR

@@ -21,15 +21,15 @@ and src/dandelion/tools/_trajectory.py; paper Methods 10.1038/s41587-023-01734-7
 Env: ddl-traj. Run with NUMBA_CACHE_DIR set (see run wrapper).
 """
 import warnings; warnings.filterwarnings("ignore")
-import os, glob, sys
-import scanpy as sc, numpy as np, pandas as pd, anndata as ad
+import os, glob
+import scanpy as sc, numpy as np, pandas as pd
 import dandelion as ddl
 import palantir
 
-BASE = "/Users/dilloncorvino/Documents/HPC_data/Thymic_NK_development"
+BASE = os.path.abspath(os.environ.get("NK_DATA_DIR", "data"))  # raw/ and processed/ live here
 GEX_SUBSET = f"{BASE}/processed/dandelion_reproduction/trajectory_gex_subset.h5ad"
 VDJ_DIR    = f"{BASE}/processed/dandelion_reproduction/dandelion_tsv"   # per-lib all_contig_dandelion.tsv
-MANIFEST   = "/Users/dilloncorvino/Documents/Github/Eomesodermin/Thymic_NK_development/data/dandelion_reproduction/suo_abTCR_vdj_manifest.json"
+MANIFEST   = f"{BASE}/dandelion_reproduction/suo_abTCR_vdj_manifest.json"   # lists the VDJ libraries (see README)
 OUT_DIR    = f"{BASE}/processed/dandelion_reproduction"
 CT_COL     = "celltype_annotation"
 

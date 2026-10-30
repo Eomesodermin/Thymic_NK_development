@@ -1,0 +1,13 @@
+numpy
+scipy
+pandas
+anndata
+scanpy
+scikit-learn
+matplotlib
+python-igraph
+leidenalg
+
+[dev]
+pytest
+ruff

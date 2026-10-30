@@ -99,7 +99,7 @@ The two streams share some datasets (the TCR stream may reuse objects downloaded
 
 ## 5. Datasets: provenance and characteristics
 
-Every dataset below was obtained from a public repository. The **paper it came from** and the **accession** are both linked. Heavy raw data (FASTQ, fragment files, Seurat/AnnData objects) live in the non‑git `HPC_data/Thymic_NK_development/` tree and on the Marvin HPC Lustre workspace; light outputs and all code are in the git repositories (see §12).
+Every dataset below was obtained from a public repository. The **paper it came from** and the **accession** are both linked. Heavy raw data (FASTQ, fragment files, Seurat/AnnData objects) are not stored in this repository; see §12 for how the scripts locate them.
 
 ### Stream A — TCR footprint
 
@@ -113,9 +113,9 @@ Every dataset below was obtained from a public repository. The **paper it came f
 
 | Dataset | Accession | Paper | Method | What it provides | NK content | Role |
 |---------|-----------|-------|--------|------------------|:----------:|------|
-| **Rückert NK memory** | [GSE197008](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE197008) / [GSE197037](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE197037) | Rückert et al. (mtASAP/ASAP‑seq) | mtscATAC + ASAP‑seq (surface protein) | Sorted blood NK; CD56/CD16 protein gate for bright/dim | **29,536 NK**, 3 ASAP samples / 6 donors | **Plan 2** primary — bright‑vs‑dim, blood arm |
-| **Weng ReDeeM atlas** | [GSE219014](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE219014) family (+ Figshare [ReDeeM‑V](https://doi.org/10.6084/m9.figshare.24418966.v1), [Seurat RDS](https://doi.org/10.6084/m9.figshare.23290004.v1)) | [Weng et al. 2024, *Nature*](https://doi.org/10.1038/s41586-024-07066-z) | ReDeeM (deepest mtDNA) | Bone‑marrow BMMC + CD34; progenitor‑proximal; RNA labels | **4,189 NK**, 4 donors | **Plan 2** complement (marrow); NK↔T origin probe |
-| **Liu tumor mtscATAC** | [GSE302113](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE302113) | [Liu et al. 2026, *Cancer Cell*](https://doi.org/10.1016/j.ccell.2026.05.006) (bioRxiv [10.1101/2025.07.16.665245](https://doi.org/10.1101/2025.07.16.665245)) | mtscATAC‑seq | NSCLC + ovarian, matched tumor/normal/blood; ~218,700 cells deposited (124,958 NSCLC + 93,757 ovarian) | 125–2,013 tumor NK w/variant per donor | **Plan 3** sole primary — tumor clonal restriction (Q4) |
+| **Rückert NK memory** | [GSE197008](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE197008) / [GSE197037](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE197037) | Rückert et al. (mtASAP/ASAP‑seq) | mtscATAC + ASAP‑seq (surface protein) | Sorted blood NK; CD56/CD16 protein gate for bright/dim | **29,536 NK**, 3 ASAP samples / 6 donors | **Analysis B1** primary — bright‑vs‑dim, blood arm |
+| **Weng ReDeeM atlas** | [GSE219014](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE219014) family (+ Figshare [ReDeeM‑V](https://doi.org/10.6084/m9.figshare.24418966.v1), [Seurat RDS](https://doi.org/10.6084/m9.figshare.23290004.v1)) | [Weng et al. 2024, *Nature*](https://doi.org/10.1038/s41586-024-07066-z) | ReDeeM (deepest mtDNA) | Bone‑marrow BMMC + CD34; progenitor‑proximal; RNA labels | **4,189 NK**, 4 donors | **Analysis B1** complement (marrow); NK↔T origin probe |
+| **Liu tumor mtscATAC** | [GSE302113](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE302113) | [Liu et al. 2026, *Cancer Cell*](https://doi.org/10.1016/j.ccell.2026.05.006) (bioRxiv [10.1101/2025.07.16.665245](https://doi.org/10.1101/2025.07.16.665245)) | mtscATAC‑seq | NSCLC + ovarian, matched tumor/normal/blood; ~218,700 cells deposited (124,958 NSCLC + 93,757 ovarian) | 125–2,013 tumor NK w/variant per donor | **Analysis B2** sole primary — tumor clonal restriction (Q4) |
 
 ### Complementary — clonal tracking
 
@@ -195,13 +195,13 @@ Two further checks were decisive. A raw‑contig audit found **0 V‑less non‑
 
 Somatic mitochondrial‑DNA variants act as natural clonal barcodes readable from single‑cell ATAC/RNA with simultaneous cell‑state readout ([Ludwig et al. 2019, *Cell*](https://doi.org/10.1016/j.cell.2019.01.022); [Lareau et al. 2023, *Nat Protoc*](https://doi.org/10.1038/s41596-022-00795-3)). All three plans below share a frozen analysis core, the **`mtclone`** package (io / qc / clones / metrics / classify; environment `mtclone`, python 3.11), so clone calling, binarization (default heteroplasmy threshold 0.07), and informative‑variant selection are identical across datasets.
 
-### 7.1 Plan 2 (flagship): CD56^bright and CD56^dim NK are **one lineage, not two**
+### 7.1 Analysis B1 (flagship): CD56^bright and CD56^dim NK are **not cleanly two lineages**
 
 **Question.** If bright and dim NK descend from common progenitors, they should **share** somatic‑mtDNA clones; if they arise from separate pathways, their clones should be **disjoint**.
 
 **Design.** Per donor, `frac_mixed_clones` = the fraction of testable clones containing *both* a bright and a dim NK, compared to a within‑donor label‑shuffle null (1000×) that fixes clone structure and the bright base‑rate. The test was run on two complementary arms — Rückert blood (protein‑gated) and ReDeeM marrow (RNA‑labelled).
 
-![Plan 2 power gate — NK cells carrying informative mtDNA variants per donor](report_assets/plan2_fig1_power.png)
+![Analysis B1 power gate — NK cells carrying informative mtDNA variants per donor](report_assets/bright_dim_fig1_power.png)
 
 *Power gate: the test is adequately powered in both arms — the great majority of NK carry ≥1 informative variant.*
 
@@ -214,45 +214,45 @@ Somatic mitochondrial‑DNA variants act as natural clonal barcodes readable fro
 
 > **How few cells this rests on — the load‑bearing caveat.** The headline NK counts (29,536 Rückert + 4,189 ReDeeM) are *not* the power basis: the sharing test only operates on **clones that contain testable NK of both subsets**, which is far smaller. The **ReDeeM marrow arm** — the progenitor‑proximal arm that would most cleanly separate two lineages — rests on **4 donors and just 38 testable clones total** (3, 7, 5, 23 per donor), and in **2 of those 4 donors both the observed and the null `frac_mixed` are exactly 1.0** (Old2: 3 clones; Young1.T2: 5 clones), meaning those donors carry essentially **no discriminating power** — every clone is trivially mixed. Only Young2 (23 clones) and Young1.T1 (7 clones) contribute any real spread. The **Rückert blood arm** has far more clones (867–1,631 per donor across 8 donors) but is ~90% CD56^dim, so the bright compartment is the binding limit (140–419 bright NK per donor vs thousands of dim). So the verdict is built on a **thin marrow arm plus a bright‑limited blood arm** — enough to exclude *clean* two‑lineage segregation, not enough to firmly establish a single lineage.
 
-![Plan 2 sharing test — observed frac_mixed vs one-lineage null and two-lineage floor](report_assets/plan2_fig2_sharing.png)
+![Analysis B1 sharing test — observed frac_mixed vs one-lineage null and two-lineage floor](report_assets/bright_dim_fig2_sharing.png)
 
 *The decisive panel: a true two‑lineage world drives `frac_mixed → 0.000` (well below both observed values and both null CIs), so the test **could** detect segregation — and does not. Each observed value sits squarely on its own single‑lineage null. The two arms differ in absolute value by clone‑definition design (ReDeeM's few large lineages nearly all span both subsets; Rückert's many size‑2 groups in ~90%‑dim blood mix less), but each lands on its matched null.*
 
 **The converse test.** Taking the clonal partition label‑free and asking whether the major lineages carry any bright/dim transcriptional signal: clonal lineage explains a **negligible** share of the bright/dim axis (**max η² = 0.022**; the two largest ReDeeM lineages differ by **Cohen's d = 0.16**).
 
-![Plan 2 clonal partition — lineage explains negligible bright/dim variance](report_assets/plan2_fig3_partition.png)
+![Analysis B1 clonal partition — lineage explains negligible bright/dim variance](report_assets/bright_dim_fig3_partition.png)
 
 *There are not "two clonal lineages mapping to bright and dim" — clonal identity barely moves the bright/dim axis.*
 
 **Robustness.** The continuum holds across binarization thresholds (0.03–0.10), coverage floors (3–10×), and both clone callers. Mixing is not doublet‑driven (mixed:pure variants/cell ratio 0.95–1.04; dropping the top‑5% variant‑load cells leaves observed unchanged, 0.857 → 0.857).
 
-![Plan 2 robustness sweep](report_assets/plan2_fig4_robustness.png)
+![Analysis B1 robustness sweep](report_assets/bright_dim_fig4_robustness.png)
 
 *The one‑lineage verdict is stable across every QC/caller setting swept.*
 
 **Verdict — "not cleanly two lineages," and this is the strongest result in the project, but it is power‑limited.** Somatic mtDNA clones are **shared** between CD56^bright and CD56^dim NK, as a single mixed lineage predicts; a *clean* two‑lineage structure (which would drive `frac_mixed → 0`) is excluded. The result is directionally consistent across **blood *and* marrow**, two mtDNA chemistries (raw mtASAP + UMI‑consensus ReDeeM), and two label modalities (protein + RNA), and it is stable across every QC/caller setting swept — which is why it is the most robust thing the project produced. **But** (see the caveat box above) the discriminating marrow arm rests on only ~38 informative clones, with 2 of 4 donors contributing no power, so the honest reading is **"no evidence for two lineages"** rather than a firmly established single continuum. It leans against the project's two‑origin premise as originally framed, without settling it. Critically, it also does **not** exclude two transcriptionally distinct progenitor inputs (ENKP/ILCP) that converge clonally — that was not tested.
 
-*Honest limit:* the **ENKP/ILCP transcriptional origin** ([Ding 2024](https://doi.org/10.1038/s41590-024-01865-2)) was **not** tested — the exported marker panels lack progenitor signatures, so "one clonal lineage" does not exclude two transcriptionally distinct progenitor inputs that converge clonally. ReDeeM marrow under‑samples CD56^dim (4 donors); Rückert blood is ~90% dim, so bright is the limiting compartment. Full results: [`scripts/analysis/development_brightdim/development_brightdim_results.md`](scripts/analysis/development_brightdim/development_brightdim_results.md).
+*Honest limit:* the **ENKP/ILCP transcriptional origin** ([Ding 2024](https://doi.org/10.1038/s41590-024-01865-2)) was **not** tested — the exported marker panels lack progenitor signatures, so "one clonal lineage" does not exclude two transcriptionally distinct progenitor inputs that converge clonally. ReDeeM marrow under‑samples CD56^dim (4 donors); Rückert blood is ~90% dim, so bright is the limiting compartment. Full results: [`results/nk_bright_dim_lineage/results.md`](results/nk_bright_dim_lineage/results.md).
 
-### 7.2 Plan 3: tumor‑NK clonal restriction is **tumor‑type‑dependent**
+### 7.2 Analysis B2: tumor‑NK clonal restriction is **tumor‑type‑dependent**
 
 **Question (Q4).** Are tumor NK a clonal‑restriction product (few clones seed and expand locally) or a polyclonal infiltrate? Two orthogonal signatures decide it: (1) within‑tumor clone‑size skew (Gini) higher in tumor than blood, and (2) tumor↔blood clone segregation — expanded tumor clones absent from blood (seeding) vs tumor mirroring blood (passive).
 
 Because GSE302113 author annotations are not public, NK were identified *de novo* by ATAC gene‑activity from fragment files. The test is powered in every donor:
 
-![GSE302113 NK power gate — tumor NK carrying informative mtDNA variants](report_assets/plan3_fig1_power.png)
+![GSE302113 NK power gate — tumor NK carrying informative mtDNA variants](report_assets/tumor_nk_fig1_power.png)
 
 *NK cells carrying ≥1 informative mtDNA variant per donor × site. The two HGSC ovarian donors (SU‑O‑004: 1,617; SU‑O‑005: 2,013 tumor NK with variant) anchor the power; NSCLC donors are thinner (125–470).*
 
 **Signature 2 (the decisive test) — tumor↔blood segregation.** A permutation null (shuffle site labels within donor) asks whether tumor and blood clones are more segregated than chance:
 
-![GSE302113 seeding test — tumor-vs-blood NK clone overlap](report_assets/plan3_fig2_seeding.png)
+![GSE302113 seeding test — tumor-vs-blood NK clone overlap](report_assets/tumor_nk_fig2_seeding.png)
 
 *All three ovarian donors are significant at baseline (red = p < 0.05, below the null); no NSCLC donor is. The right panel shows most expanded tumor NK clones are also present in blood in the lung cases (passive infiltration), while the ovarian cases carry tumor‑restricted expansions.*
 
 **Robustness grid** (restricted to the 4 clone‑structure‑preserving configs) resolves which calls are real vs which are sparsity artifacts:
 
-![GSE302113 robustness grid — seeding p-value across configurations](report_assets/plan3_fig3_robustness.png)
+![GSE302113 robustness grid — seeding p-value across configurations](report_assets/tumor_nk_fig3_robustness.png)
 
 *Green = p < 0.05. The four left columns are structure‑preserving (verdict basis); the four right columns are clone‑distorting (fragment/merge) where apparent significance is spurious. SU‑O‑004 is green across all four verdict configs; the NSCLC donors are only green under distorting settings.*
 
@@ -271,7 +271,7 @@ Because GSE302113 author annotations are not public, NK were identified *de novo
 
 **Verdict.** NK tumor infiltration is **clonally restricted in high‑grade serous ovarian cancer, but not in lung — it is tumor‑type‑dependent, not a general property of NK TILs.** SU‑O‑004 is the one unambiguous seeding case; SU‑O‑005 (the Liu anchor) is robust under the primary analysis but sensitive to how NK are defined (loses significance under the strict NK‑not‑ILC filter). The two signatures are partly decoupled — restriction is best read from the segregation test, not within‑tumor Gini alone.
 
-**How this revises [Liu et al.](https://doi.org/10.1016/j.ccell.2026.05.006):** it **confirms** their central ovarian observation (HGSC tumor NK carry oligoclonal, tumor‑restricted expansions) and shows it is not a one‑tumor fluke — SU‑O‑004 is a second, cleaner case than their SU‑O‑005 anchor; and it **explains** their aggregate "innate high‑clone‑sharing" finding as lung‑dominated (lung NK infiltration genuinely is polyclonal/passive). Full results: [`scripts/analysis/tumor_clonal_restriction/tumor_clonal_restriction_results.md`](scripts/analysis/tumor_clonal_restriction/tumor_clonal_restriction_results.md).
+**How this revises [Liu et al.](https://doi.org/10.1016/j.ccell.2026.05.006):** it **confirms** their central ovarian observation (HGSC tumor NK carry oligoclonal, tumor‑restricted expansions) and shows it is not a one‑tumor fluke — SU‑O‑004 is a second, cleaner case than their SU‑O‑005 anchor; and it **explains** their aggregate "innate high‑clone‑sharing" finding as lung‑dominated (lung NK infiltration genuinely is polyclonal/passive). Full results: [`results/tumor_nk_clonal_restriction/results.md`](results/tumor_nk_clonal_restriction/results.md).
 
 ### 7.3 The NK↔T shared‑clone origin probe — a clean negative
 
@@ -279,7 +279,7 @@ mtDNA can, in principle, do the one thing the TCR footprint cannot: test whether
 
 **Result: not viable with adult‑marrow mtscATAC snapshots.** Power is fine (88–93% of NK informative), but author clones are too coarse — **every** NK‑containing clone also contains T cells (frac = 1.00), sitting at or below the null (p ≈ 0.92–1.00). Re‑calling fine clones from rare private variants does not rescue signal (all at null, p = 0.39–0.98). A variant‑level private‑sharing test *appears* significant (p = 0.002) but **fails its lineage control**: NK shares private variants with B cells and with *monocytes* at the same rate as or higher than with T cells — the apparent signal tracks partner‑cell coverage, not ancestry.
 
-The mechanistic reason it may be unrecoverable at any scale: the NK‑vs‑T common ancestor is a deep HSC/early progenitor, and in an adult‑marrow cross‑section that lineage bottleneck is mostly unsampled — mtscATAC sees the leaves, not the split. **The reusable methodological product** is a design rule now applied to every mtDNA origin claim: an NK–T sharing count is evidence only if it exceeds **both** a label‑shuffle null **and** a coverage‑matched NK–B / NK–myeloid lineage control. Full memo: [`nk_t_origin_probe_memo.md`](docs/nk_t_origin_probe_memo.md) *(project artifact).*
+The mechanistic reason it may be unrecoverable at any scale: the NK‑vs‑T common ancestor is a deep HSC/early progenitor, and in an adult‑marrow cross‑section that lineage bottleneck is mostly unsampled — mtscATAC sees the leaves, not the split. **The reusable methodological product** is a design rule now applied to every mtDNA origin claim: an NK–T sharing count is evidence only if it exceeds **both** a label‑shuffle null **and** a coverage‑matched NK–B / NK–myeloid lineage control. Full memo: [`nk_t_origin_probe_memo.md`](docs/nk_t_origin_probe_memo.md) *.*
 
 ---
 
@@ -303,7 +303,7 @@ Because the mtDNA modality could not certify an NK↔T common ancestor, the orig
 
 NK–Monocyte fold exceeds NK–T fold in **5 of 6 patients** (Wilcoxon p = 0.0625, the minimum attainable at n = 6 with one dissenter). NK–T sharing sits *below* chance (median fold 0.51 — NK clones are depleted of T co‑membership) while NK–Monocyte is at/above chance (median 1.26).
 
-**Interpretation — directional, not decisive, and the human evidence is genuinely mixed.** This reproduces and extends [Biasco et al. 2016, *Cell Stem Cell*](https://doi.org/10.1016/j.stem.2016.04.016) (NK clonally nearer myeloid) in an independent cohort with an explicit size‑controlled statistic. But it stands in tension with [Scala et al. 2021, *Nat Commun*](https://doi.org/10.1038/s41467-021-21834-9), which found a long‑term *lymphoid* progenitor sustaining T+NK together for 15 years. The two can coexist (a rare lymphoid‑restricted T+NK progenitor plus a dominant myeloid‑proximal NK output), but the honest summary is that **human NK developmental origin is unsettled** — this analysis adds one myeloid‑leaning data point (n = 6, p ≈ 0.06, post‑transplant setting), not a resolution. Full memo: [`six2020_nk_origin_memo.md`](docs/six2020_nk_origin_memo.md) *(project artifact).*
+**Interpretation — directional, not decisive, and the human evidence is genuinely mixed.** This reproduces and extends [Biasco et al. 2016, *Cell Stem Cell*](https://doi.org/10.1016/j.stem.2016.04.016) (NK clonally nearer myeloid) in an independent cohort with an explicit size‑controlled statistic. But it stands in tension with [Scala et al. 2021, *Nat Commun*](https://doi.org/10.1038/s41467-021-21834-9), which found a long‑term *lymphoid* progenitor sustaining T+NK together for 15 years. The two can coexist (a rare lymphoid‑restricted T+NK progenitor plus a dominant myeloid‑proximal NK output), but the honest summary is that **human NK developmental origin is unsettled** — this analysis adds one myeloid‑leaning data point (n = 6, p ≈ 0.06, post‑transplant setting), not a resolution. Full memo: [`six2020_nk_origin_memo.md`](docs/six2020_nk_origin_memo.md) *.*
 
 ---
 
@@ -328,7 +328,7 @@ This is an honest negative on the headline hypothesis, and its value is diagnost
 
 - **No thymic deep‑mtDNA dataset exists.** The single biggest gap. Testing Q3 by lineage tracing requires a thymic mtscATAC/ReDeeM/MAESTER dataset with paired NK and captured DN/ETP progenitors *in the same individual* — none is public. The confirmed absence (155‑series GEO sweep) is itself a finding.
 - **TCR presence ≠ thymic origin.** Even a strong footprint would not prove aborted‑T development ([Ribeiro 2010](https://doi.org/10.4049/jimmunol.1002273) separates thymic from aborted‑T origin). This is a structural limit of dataset mining, not a power problem.
-- **mtDNA clonality ≠ developmental origin.** Plan 2's "one lineage" is about clonal sharing; it does not exclude two transcriptionally distinct progenitor inputs (ENKP/ILCP) that converge clonally — which was not tested (marker panels lacked progenitor signatures).
+- **mtDNA clonality ≠ developmental origin.** Analysis B1's "one lineage" is about clonal sharing; it does not exclude two transcriptionally distinct progenitor inputs (ENKP/ILCP) that converge clonally — which was not tested (marker panels lacked progenitor signatures).
 - **Ambient/doublet floors are only partially modelled.** The GEO processed layers lack per‑cell depth, so a coverage‑based contamination model can't be fully fit; the variant‑frequency sweep is the available proxy. A full floor needs raw mgatk output.
 - **Small n throughout the origin analyses.** The tumor‑restriction verdict rides on 2 HGSC donors; the Six 2020 origin trend is n = 6 at p ≈ 0.06 in a post‑transplant setting.
 
@@ -338,7 +338,7 @@ This is an honest negative on the headline hypothesis, and its value is diagnost
 
 ## 11. Literature cited
 
-*A fuller DOI‑anchored synthesis is in [`literature_review.md`](docs/literature_review.md) (project artifact). Key references, grouped by theme:*
+*A fuller DOI‑anchored synthesis is in [`literature_review.md`](docs/literature_review.md) . Key references, grouped by theme:*
 
 **Dual‑origin model & NK subset biology**
 - Ding et al. 2024, *Nat Immunol* — ENKP vs ILCP NK pathways; human dim≈ENKP, bright≈ILCP. [10.1038/s41590-024-01865-2](https://doi.org/10.1038/s41590-024-01865-2)
@@ -375,34 +375,39 @@ This is an honest negative on the headline hypothesis, and its value is diagnost
 
 ## 12. Reproducibility: code, data, and compute
 
-The project follows a strict three‑way split (code in git, data out of git, heavy compute on HPC):
+**Code.** Everything in this repository runs from the layout below.
 
-**Code repositories (git, pushed to `main`):**
-- **[`Thymic_NK_development`](https://github.com/Eomesodermin/Thymic_NK_development)** — all project analysis code. Key trees:
-  - `scripts/mtclone/` — the frozen mtDNA clone‑calling package (io/qc/clones/metrics/classify + tests), shared by both mtDNA plans.
-  - `scripts/analysis/development_brightdim/` — Plan 2 (ingestion + steps 3–7 + results).
-  - `scripts/analysis/tumor_clonal_restriction/` — Plan 3 (01_download → 08_robustness + results).
-  - `scripts/dandelion_reproduction/` — Stream A trajectory reproduction (subset → build → driver dissection → plot).
-  - `scripts/analysis/footprint_pipeline.py`, `harvest_footprint.py` — Q1/Q2 bright‑vs‑dim footprint quantification.
-  - `results/` — figures, per‑stream result memos, and the two rendered per‑plan HTML reports.
-  - `report.md` / `report.html` — **this report** (the README points here).
-- **[`HPC_workflows`](https://github.com/Eomesodermin/HPC_workflows)** — general HPC scaffolding + this project's cluster jobs under `thymic_nk_development/`:
-  - `dandelion_reproduction/` — cellranger `vdj` submit/resubmit scripts + `sc-dandelion` preprocessing SLURM jobs.
-  - `domconde_alignment/` — cellranger `vdj` re‑alignment jobs for the Domínguez Condé atlas (smoke + batch + resubmit).
-  - `envs/dandelion_env.yml` — the reannotation conda spec.
+- `scripts/mtclone/`: the frozen mtDNA clone-calling package (`io`, `qc`, `clones`, `metrics`,
+  `classify`) with its unit tests, shared by both mtDNA analyses.
+- `scripts/nk_bright_dim_lineage/`: Analysis B1 (ingestion and steps 3–7). Results are in
+  `results/nk_bright_dim_lineage/results.md`.
+- `scripts/tumor_nk_clonal_restriction/`: Analysis B2 (`01_download` to `08_robustness`). Results are in
+  `results/tumor_nk_clonal_restriction/results.md`.
+- `scripts/dandelion_reproduction/`: the Stream A trajectory reproduction (subset, build, driver
+  dissection, plot).
+- `scripts/tcr_footprint/`: the Q1/Q2 bright-versus-dim TCR footprint quantification.
+- `report_assets/`: the figures embedded in this report.
 
-**Data (not git):** `HPC_data/Thymic_NK_development/` holds `raw/` (FASTQ, fragment files, Seurat/AnnData — ~61 GB), `processed/` (per‑step objects + light outputs — CSVs, TSVs, PNGs, per‑plan HTML), and `hpc_runs/marvin_provenance_20260713/` (383 files: 141 cellranger `metrics_summary.csv` + 242 SLURM run logs, mirrored from the cluster as run provenance).
+**Data.** Every dataset is public and listed with its accession in §5. Raw downloads and processed
+intermediates (about 61 GB of FASTQ, fragment files and Seurat/AnnData objects) are not stored in the
+repository. The scripts read and write them under `$NK_DATA_DIR` (default `./data`, with `raw/` and
+`processed/` subdirectories). `scripts/tumor_nk_clonal_restriction/01_download_fragments.py` fetches the
+GSE302113 fragment files. The other datasets come from GEO, ENA, ArrayExpress and Figshare using the
+links in §5.
 
-**Compute (Marvin HPC, University of Bonn; SLURM, account `ag_iei_abdullah`):** the heavy VDJ re‑alignments live on the project Lustre workspace `/lustre/scratch/data/dcorvino_hpc-thymic_nk_development/`:
-- `raw/E-MTAB-11388_vdj/` (64 Suo αβTCR libraries) and `raw/E-MTAB-11536_vdj/` (77 Domínguez Condé runs).
-- `work/` — ~144 cellranger `vdj` output directories (the aligned contigs). These are large intermediate compute outputs and remain on the cluster by design; the consolidated dandelion TSVs and per‑library metrics are mirrored locally.
-- Software: cellranger 9.0.1, VDJ reference `refdata-cellranger-vdj-GRCh38-alts-ensembl-7.1.0`, `sc-dandelion_latest.sif` (dandelion 1.0.0a1.dev58). Reference: `HPC_workflows/marvin_hpc_reference.md`.
+**Compute.** The heavy step was re-aligning TCR VDJ data for 64 Suo libraries and 77 Domínguez Conde runs
+with `cellranger vdj` 9.0.1 against `refdata-cellranger-vdj-GRCh38-alts-ensembl-7.1.0`, followed by
+`sc-dandelion` re-annotation (dandelion 1.0.0a1.dev58). These ran as batch jobs on an HPC cluster,
+and only their consolidated outputs are used here. The mtDNA analyses and the trajectory
+reproduction run on a workstation.
 
-**Analysis environments:** `mtclone` (python 3.11, mtDNA analysis) and `ddl-traj` (scanpy 1.10.4 / dandelion 0.5.7 / palantir 1.4.4, trajectory reproduction).
+**Environments and tests.**
+
+- `mtclone` (Python 3.11): `conda env create -f environment.yml` or `pip install -e .`. Run the
+  tests with `pytest`.
+- `ddl-traj` (trajectory reproduction): scanpy 1.10.4, dandelion 0.5.7, scvi-tools 1.3.3,
+  palantir 1.4.4, pertpy 0.10.0.
 
 ---
 
-*Report generated as the closing deliverable of the project. All figures are embedded from `report_assets/`; the self‑contained `report.html` inlines them as base64 so it renders standalone in any browser.*
-
-
-
+*All figures are embedded from `report_assets/`.*

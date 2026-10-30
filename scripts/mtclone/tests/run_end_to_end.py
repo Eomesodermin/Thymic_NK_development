@@ -1,4 +1,4 @@
-"""End-to-end harness (Plan 1 gate): run the full mtclone chain on ONE real sample from
+"""End-to-end harness (Gate 1): run the full mtclone chain on ONE real sample from
 each anchor dataset, assert the pipeline produces valid, sane output, and write a report.
 
 Usage:
@@ -12,16 +12,14 @@ Datasets:
             + variant_stats). This is the primary real-data validation.
   ReDeeM    GSE219014 Aged1 BMMC: the variant .mtx ships WITHOUT companion barcodes/features
             in the GEO deposit, so this leg validates the .mtx adapter + downstream
-            structurally (positional names) and documents the annotation gap for Plan 2.
+            structurally (positional names) and documents the annotation gap for Analysis B1.
 """
 from __future__ import annotations
-import argparse, gzip, json, os, sys, datetime, traceback
+import argparse, gzip, json, sys, datetime, traceback
 from pathlib import Path
 
 import numpy as np
-import pandas as pd
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import mtclone
 from mtclone import io, qc, clones, metrics
 
@@ -78,14 +76,14 @@ def run_mtscatac(testdata, outdir, rep):
 
 def run_redeem(testdata, outdir, rep):
     _log(rep, "\n## ReDeeM — GSE219014 Aged1 BMMC (structural validation)\n")
-    import scipy.io, scipy.sparse as sp
+    import scipy.io
     mtx = testdata / "GSE219014_Aged1_BMMC.mtDNA_Variants_matrix.mtx.gz"
     with gzip.open(mtx, "rt") as fh:
         M = scipy.io.mmread(fh).tocsr()
     _log(rep, f"- raw matrix: {M.shape[0]} x {M.shape[1]}, {M.nnz} nonzero")
     _log(rep, "- NOTE: GEO deposit ships NO barcodes/features for this matrix. Orientation "
               "and variant identities are NOT recoverable from GEO alone; real analysis "
-              "(Plan 2) must source them from the redeemR repo / Zenodo. This leg uses "
+              "(Analysis B1) must source them from the redeemR repo / Zenodo. This leg uses "
               "positional placeholder names to validate the adapter + downstream only.")
     # orient to cells x variants: assume the LARGER axis is variants (ReDeeM finds many)
     n_r, n_c = M.shape
@@ -121,7 +119,7 @@ def main():
     args = ap.parse_args()
     testdata = Path(args.testdata); outdir = Path(args.out); outdir.mkdir(parents=True, exist_ok=True)
 
-    rep = [f"# mtclone end-to-end test report",
+    rep = ["# mtclone end-to-end test report",
            f"\n_Generated {datetime.datetime.now().isoformat(timespec='seconds')} · "
            f"mtclone v{mtclone.__version__}_\n"]
     results = {}

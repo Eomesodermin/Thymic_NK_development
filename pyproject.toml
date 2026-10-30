@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mtclone"
+version = "0.1.0"
+description = "Somatic mtDNA clonal analysis of single cells (clone calling, QC, sharing metrics)"
+readme = "scripts/mtclone/README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Dillon Corvino" }]
+dependencies = [
+    "numpy",
+    "scipy",
+    "pandas",
+    "anndata",
+    "scanpy",
+    "scikit-learn",
+    "matplotlib",
+    "python-igraph",
+    "leidenalg",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff"]
+
+[tool.setuptools]
+package-dir = { "" = "scripts" }
+
+[tool.setuptools.packages.find]
+where = ["scripts"]
+include = ["mtclone*"]
+
+[tool.pytest.ini_options]
+testpaths = ["scripts/mtclone/tests"]
+python_files = ["test_*.py"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+# Pyflakes errors and pycodestyle only; the analysis scripts keep their compact style.
+select = ["E", "F", "W"]
+# E402: warnings are silenced before heavy imports. E731/F841: legacy analysis-script style.
+ignore = ["E401", "E402", "E501", "E701", "E702", "E731", "E741", "F841"]

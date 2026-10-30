@@ -13,14 +13,14 @@ Outputs: fig5b_vdj_feature_umap.png, fig5c_branch_probabilities.png
 Env: ddl-traj (NUMBA_CACHE_DIR set).
 """
 import warnings; warnings.filterwarnings("ignore")
-import os, numpy as np, pandas as pd, scanpy as sc
+import os, numpy as np, scanpy as sc
 import matplotlib as mpl, matplotlib.pyplot as plt
 
-BASE = "/Users/dilloncorvino/Documents/HPC_data/Thymic_NK_development/processed/dandelion_reproduction"
-OUT  = os.path.expanduser("~/Documents/Github/Eomesodermin/Thymic_NK_development/results/dandelion_reproduction")
+BASE = os.path.join(os.path.abspath(os.environ.get("NK_DATA_DIR", "data")), "processed", "dandelion_reproduction")
+OUT  = os.path.join(os.environ.get("NK_RESULTS_DIR", "results"), "dandelion_reproduction")
 os.makedirs(OUT, exist_ok=True)
 
-# --- minimal publication rc (figure-style rules; ddl-traj has no skill kernel) ---
+# --- minimal publication rc (figure style) ---
 mpl.rcParams.update({
     "figure.dpi":150, "savefig.dpi":300, "font.size":8, "axes.titlesize":8,
     "axes.labelsize":8, "xtick.labelsize":6, "ytick.labelsize":6, "legend.fontsize":6,

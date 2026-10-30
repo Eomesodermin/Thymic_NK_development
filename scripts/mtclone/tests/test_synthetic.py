@@ -5,15 +5,12 @@ The goal is to prove each stage does what it claims on data whose answer we cont
  - one merged clone set  -> high cross-group sharing.
 Run: pytest -q  (from scripts/mtclone/, or `pytest scripts/mtclone`).
 """
-import os, sys
 import numpy as np
 import pandas as pd
 import scipy.sparse as sp
 import anndata as ad
 import pytest
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-import mtclone
 from mtclone import io, qc, clones, metrics, classify
 
 

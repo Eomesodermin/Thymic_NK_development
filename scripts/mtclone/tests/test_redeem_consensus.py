@@ -4,12 +4,10 @@ Builds a tiny RawGenotypes.Sensitive.StrandBalance + QualifiedTotalCts with KNOW
 heteroplasmy so we can assert exact fractions (Freq/Depth), correct orientation
 (cells x variants), canonical variant ids, real per-cell coverage, and schema validity.
 """
-import os, sys
 import numpy as np
 import pandas as pd
 import pytest
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from mtclone import io
 
 
